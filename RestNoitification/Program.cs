@@ -47,14 +47,14 @@ namespace RestNoitification
                 trayIcon.Visible = true;
                 timer.Enabled = true;
 
+                updateIcon(minutes);
                 int currentMiuntes = minutes;
-                updateIcon(currentMiuntes);
                 timer.Interval = 1000 * 60;
                 timer.Start();
 
                 timer.Tick += (sender, e) =>
                 {
-                    if (currentMiuntes <= 0)
+                    if (currentMiuntes <= 1)
                     {
                         timer.Stop();
                         timer.Enabled = false;
