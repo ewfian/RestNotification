@@ -11,6 +11,8 @@ using RestNoitification.ShellHelpers;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 using System.Threading;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace RestNoitification
 {
@@ -20,6 +22,7 @@ namespace RestNoitification
 
         static void Main(string[] args)
         {
+
             int minutes = 25;
             if (!(args.Length == 0 || (args.Length == 1 && int.TryParse(args[0], out minutes))))
             {
@@ -27,12 +30,65 @@ namespace RestNoitification
             }
             else
             {
-                ShowToast("工作提醒", "现在是" + DateTime.Now.ToString("HH:mm:ss"), "开始工作吧，" + minutes + "分钟后提醒你休息");
-                Thread.Sleep(1000 * 10 * minutes);
-                ShowToast("休息提醒", "现在是" + DateTime.Now.ToString("HH:mm:ss"), "你已经工作了" + minutes + "分钟， 该休息了");
+                using (new Form1(minutes))
+                {
+                    Application.Run();
+                }
             }
-            Environment.Exit(-1);
         }
+
+        public class Form1 : System.Windows.Forms.Form
+        {
+            private System.Windows.Forms.NotifyIcon trayIcon = new System.Windows.Forms.NotifyIcon();
+            private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            public Form1(int minutes)
+            {
+                ShowToast("工作提醒", "现在是" + DateTime.Now.ToString("HH:mm:ss"), "开始工作吧，" + minutes + "分钟后提醒你休息");
+                trayIcon.Visible = true;
+                timer.Enabled = true;
+
+                int currentMiuntes = minutes;
+                updateIcon(currentMiuntes);
+                timer.Interval = 1000 * 60;
+                timer.Start();
+
+                timer.Tick += (sender, e) =>
+                {
+                    if (currentMiuntes <= 0)
+                    {
+                        timer.Stop();
+                        timer.Enabled = false;
+                        this.trayIcon.Visible = false;
+                        ShowToast("休息提醒", "现在是" + DateTime.Now.ToString("HH:mm:ss"), "你已经工作了" + minutes + "分钟， 该休息了");
+                        timer.Dispose();
+                        Environment.Exit(-1);
+                    }
+                    updateIcon(currentMiuntes -= 1);
+                };
+            }
+
+            private void updateIcon(int currentMiuntes)
+            {
+                Bitmap bmp = new Bitmap(30, 30);
+                // Create an ImageGraphics Graphics object from bitmap Image
+                System.Drawing.Graphics ImageGraphics = System.Drawing.Graphics.FromImage(bmp);
+                // Draw random code within Image
+                System.Drawing.Font drawFont = new System.Drawing.Font("Arial Narrow", 25, FontStyle.Regular);
+                System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+                System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
+                ImageGraphics.DrawString(currentMiuntes.ToString("D2"), drawFont, drawBrush, -5, -5, new System.Drawing.StringFormat());
+                //
+                // Dispose used Objects
+                //
+                drawFont.Dispose();
+                drawBrush.Dispose();
+                ImageGraphics.Dispose();
+                //
+                trayIcon.Icon = Icon.FromHandle(bmp.GetHicon());
+                trayIcon.Text = "再工作" + currentMiuntes + "分钟就该休息了";
+            }
+        }
+
 
         // In order to display toasts, a desktop application must have a shortcut on the Start menu.
         // Also, an AppUserModelID must be set on that shortcut.
