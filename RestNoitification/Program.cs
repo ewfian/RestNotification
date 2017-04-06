@@ -13,12 +13,18 @@ using Windows.Data.Xml.Dom;
 using System.Threading;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace RestNoitification
 {
     class Program
     {
         private const String APP_ID = "Fan.RestNoitification";
+
+        [DllImport("user32.dll")]
+        public static extern bool LockWorkStation();
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
         static void Main(string[] args)
         {
@@ -61,6 +67,11 @@ namespace RestNoitification
                         this.trayIcon.Visible = false;
                         ShowToast("休息提醒", "现在是" + DateTime.Now.ToString("HH:mm:ss"), "你已经工作了" + minutes + "分钟， 该休息了");
                         timer.Dispose();
+
+                        Thread.Sleep(2000);
+
+                        LockWorkStation();
+                        //SendMessage(this.Handle, (uint)0x0112, (IntPtr)0xF170, (IntPtr)2);
                         Environment.Exit(-1);
                     }
                     updateIcon(currentMiuntes -= 1);
