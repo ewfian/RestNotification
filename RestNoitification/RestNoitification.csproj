@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Notification\Notification.cs" />
-    <Compile Include="Notification\Taskbar\Taskbar.cs" />
+    <Compile Include="Notification\TrayIcon\TrayIcon.cs" />
     <Compile Include="Notification\Toast\Message\Message.cs" />
     <Compile Include="Notification\Toast\Toast.cs" />
     <Compile Include="Notification\WorkStation\WorkStation.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\BitmapHelper.cs" />
     <Compile Include="Utilities\ShellHelpers.cs" />
-    <Compile Include="Utilities\MessageHelper.cs" />
+    <Compile Include="Utilities\TrayIconHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

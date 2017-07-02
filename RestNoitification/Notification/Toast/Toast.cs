@@ -13,21 +13,21 @@ namespace RestNoitification.Notification
     /// <summary>
     /// Toast通知
     /// </summary>
-    public static class Toast
+    public  class Toast
     {
         /// <summary>
         /// 应用程序标识符
         /// </summary>
-        public static string AppId = "Fan.RestNoitification";
+        public  string AppId = "Fan.RestNoitification";
         /// <summary>
         /// 快捷方式附加路径
         /// </summary>
-        public static string InkPath = "\\Microsoft\\Windows\\Start Menu\\Programs\\RestNoitification.lnk";
+        public  string InkPath = "\\Microsoft\\Windows\\Start Menu\\Programs\\RestNoitification.lnk";
 
         /// <summary>
         /// 创建并显示Toast通知
         /// </summary>
-        public static void ShowToast(Message message)
+        public  void ShowToast(Message message,Action userCanceled=null)
         {
             TryCreateShortcut(AppId);
 
@@ -44,6 +44,7 @@ namespace RestNoitification.Notification
             CreateAudio(message.IsPlayingSound, toastXml);
 
             ToastNotification toast = new ToastNotification(toastXml);
+            toast.ExpirationTime = new DateTimeOffset(DateTime.Now + new TimeSpan(0, 0, 5));
             toast.Activated += (sender, e) =>
             {
                 Console.WriteLine("Activated");
@@ -61,6 +62,7 @@ namespace RestNoitification.Notification
                     case ToastDismissalReason.UserCanceled:
                         outputText = "Dismissed";
                         exitCode = 2;
+                        userCanceled?.Invoke();
                         break;
                     case ToastDismissalReason.TimedOut:
                         outputText = "Timeout";
@@ -80,7 +82,7 @@ namespace RestNoitification.Notification
         /// <summary>
         /// 尝试创建快捷方式
         /// </summary>
-        private static bool TryCreateShortcut(string appId)
+        private  bool TryCreateShortcut(string appId)
         {
             String path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + InkPath;
             if (!File.Exists(path))
@@ -93,7 +95,7 @@ namespace RestNoitification.Notification
         /// <summary>
         /// 创建快捷方式
         /// </summary>
-        private static void CreateShortcut(String shortcutPath, string appId)
+        private  void CreateShortcut(String shortcutPath, string appId)
         {
             String exePath = Process.GetCurrentProcess().MainModule.FileName;
             IShellLinkW newShortcut = (IShellLinkW)new CShellLink();
@@ -115,7 +117,7 @@ namespace RestNoitification.Notification
         /// <summary>
         /// 创建附加音效
         /// </summary>
-        private static void CreateAudio(bool useSound, XmlDocument toastXml)
+        private  void CreateAudio(bool useSound, XmlDocument toastXml)
         {
             var audio = toastXml.GetElementsByTagName("audio").FirstOrDefault();
 
