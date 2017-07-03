@@ -81,7 +81,7 @@ namespace RestNoitification.Notification
             while (true)
             {
                 await Task.Delay(interval);
-                await Task.Run(() => Toast.ShowToast(GetDefaultMessage(Target),()=> { WorkStation.Lock(); Environment.Exit(0); }));
+                await Task.Run(() => Toast.ShowToast(GetDefaultMessage(Target), () => { WorkStation.Lock(); Environment.Exit(0); }));
                 //Reset();
             }
         }
@@ -89,10 +89,10 @@ namespace RestNoitification.Notification
         /// 创建一个指定时间间隔后更新的任务
         /// </summary>
         private async Task UpdateAsync(TimeSpan interval)
-        {      
+        {
             while (true)
             {
-                int total =(int)Math.Round((Target - DateTime.Now).TotalMinutes);
+                int total = (int)Math.Round((Target - DateTime.Now).TotalMinutes);
                 await Task.Run(() => TrayIcon.UpdateIcon(BitmapHelper.GetTrayBitmap(total), $"再工作{total}分钟就该休息了"));
                 await Task.Delay(interval);
             }
@@ -105,7 +105,7 @@ namespace RestNoitification.Notification
             while (true)
             {
                 int total = (int)Math.Round((Target - DateTime.Now).TotalMinutes);
-                await Task.Run(() => TrayIcon.ShowBallonTip("温馨提醒", $"哈哈哈，再工作{total}分钟就该休息了", timeout));
+                await Task.Run(() => TrayIcon.ShowBallonTip("温馨提醒", $"再工作{total}分钟就该休息了", timeout));
                 await Task.Delay(interval);
             }
         }
@@ -117,7 +117,7 @@ namespace RestNoitification.Notification
         {
             string title = "休息提醒";
             string subTitle = $"现在是{DateTime.Now.ToString("HH:mm:ss")}";
-            string content = $"你已经工作了{(int)(target - DateTime.Now).TotalMinutes}分钟， 该休息了!\r\n（点击可取消锁屏）";
+            string content = $"你已经工作了{(int)(target - DateTime.Now).TotalMinutes}分钟， 该休息了!{Environment.NewLine}（点击可取消锁屏）";
             string imagePath = $"file:///{System.AppDomain.CurrentDomain.BaseDirectory}Assets\\young.jpg"; ;
             return new Message(title, subTitle, content, imagePath, true);
         }
