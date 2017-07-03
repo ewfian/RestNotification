@@ -27,7 +27,7 @@ namespace RestNoitification.Notification
         /// <summary>
         /// 创建并显示Toast通知
         /// </summary>
-        public  void ShowToast(Message message,Action userCanceled=null)
+        public  void ShowToast(Message message,Action activated=null,Action userCanceled=null,Action timeOut=null)
         {
             TryCreateShortcut(AppId);
 
@@ -44,10 +44,10 @@ namespace RestNoitification.Notification
             CreateAudio(message.IsPlayingSound, toastXml);
 
             ToastNotification toast = new ToastNotification(toastXml);
-            toast.ExpirationTime = new DateTimeOffset(DateTime.Now + new TimeSpan(0, 0, 5));
             toast.Activated += (sender, e) =>
             {
                 Console.WriteLine("Activated");
+                activated?.Invoke();
             };
             toast.Dismissed += (sender, e) =>
             {
@@ -60,13 +60,14 @@ namespace RestNoitification.Notification
                         exitCode = 1;
                         break;
                     case ToastDismissalReason.UserCanceled:
-                        outputText = "Dismissed";
+                        outputText = "UserCanceled";
                         exitCode = 2;
                         userCanceled?.Invoke();
                         break;
                     case ToastDismissalReason.TimedOut:
                         outputText = "Timeout";
                         exitCode = 3;
+                        timeOut?.Invoke();
                         break;
                 }
                 Console.WriteLine($"code:{exitCode}description:{outputText}");

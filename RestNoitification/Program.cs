@@ -14,6 +14,7 @@ namespace RestNoitification
         static void Main(string[] args)
         {
             Current = new Notification.Notification();
+            Current.Start();
             Application.Run();
         }
     }
