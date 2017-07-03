@@ -46,17 +46,17 @@ namespace RestNoitification.Notification
 
             Toast = new Toast();
 
-            //默认25分钟休息一次
-            IntervalOfRest = new TimeSpan(0, 1, 0);
-            //默认托盘图标每1分钟更新一次
-            IntervalOfUpdate = new TimeSpan(0, 1, 0);
+
 
         }
         /// <summary>
         /// 开始
         /// </summary>
-        public void Start()
+        public void Start(TimeSpan interval)
         {
+            IntervalOfRest = interval;
+            //默认托盘图标每1分钟更新一次
+            IntervalOfUpdate = new TimeSpan(0, 1, 0);
             Reset();
             Task.Run(() => UpdateAsync(IntervalOfUpdate));
         }

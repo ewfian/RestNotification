@@ -14,7 +14,12 @@ namespace RestNoitification
         static void Main(string[] args)
         {
             Current = new Notification.Notification();
-            Current.Start();
+            int minutes = 25;
+            if (args.Length == 1)
+            {
+                int.TryParse(args[0], out minutes);
+            }
+            Current.Start(new TimeSpan(0,minutes,0));
             Application.Run();
         }
     }
