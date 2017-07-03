@@ -78,7 +78,7 @@
     <Reference Include="Windows">
       <HintPath>Windows.winmd</HintPath>
       <HintPath>C:\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.15063.0\Windows.winmd</HintPath>
-      <HintPath>C:\Program Files (x86)\Windows Phone Kits\8.1\References\CommonConfiguration\Neutral\Annotated\Windows.winmd</HintPath>
+      <HintPath>C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral\Annotated\Windows.winmd</HintPath>
       <HintPath>C:\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.14393.3\Windows.winmd</HintPath>
     </Reference>
   </ItemGroup>
