@@ -1,4 +1,4 @@
-﻿namespace RestNoitification.Notification
+﻿namespace RestNotification.Notification
 {
     /// <summary>
     /// 消息

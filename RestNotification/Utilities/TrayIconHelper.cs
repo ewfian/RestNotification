@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RestNoitification.Utilities
+namespace RestNotification.Utilities
 {
     public class TrayIconHelper
     {

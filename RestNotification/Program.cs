@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace RestNoitification
+namespace RestNotification
 {
     class Program
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using MS.WindowsAPICodePack.Internal;
-using RestNoitification.ShellHelpers;
+using RestNotification.ShellHelpers;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Linq;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
-namespace RestNoitification.Notification
+namespace RestNotification.Notification
 {
     /// <summary>
     /// Toast通知
@@ -18,7 +18,7 @@ namespace RestNoitification.Notification
         /// <summary>
         /// 应用程序标识符
         /// </summary>
-        public  string AppId = "Fan.RestNoitification";
+        public  string AppId = "Fan.RestNotification";
         /// <summary>
         /// 快捷方式附加路径
         /// </summary>

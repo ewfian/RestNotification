@@ -1,8 +1,8 @@
 ﻿using System;
-using RestNoitification.Utilities;
+using RestNotification.Utilities;
 using System.Threading.Tasks;
 
-namespace RestNoitification.Notification
+namespace RestNotification.Notification
 {
     /// <summary>
     /// 提醒

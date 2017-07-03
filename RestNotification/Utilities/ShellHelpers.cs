@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using MS.WindowsAPICodePack.Internal;
 
-namespace RestNoitification.ShellHelpers
+namespace RestNotification.ShellHelpers
 {
     internal enum STGM : long
     {

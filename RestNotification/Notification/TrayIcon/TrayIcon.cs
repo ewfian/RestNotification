@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RestNoitification.Notification
+namespace RestNotification.Notification
 {
     /// <summary>
     /// 任务栏通知图标
