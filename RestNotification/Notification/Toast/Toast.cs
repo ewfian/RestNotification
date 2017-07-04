@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using MS.WindowsAPICodePack.Internal;
-using RestNoitification.ShellHelpers;
+using RestNotification.ShellHelpers;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Linq;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
-namespace RestNoitification.Notification
+namespace RestNotification.Notification
 {
     /// <summary>
     /// Toast通知
@@ -18,7 +18,7 @@ namespace RestNoitification.Notification
         /// <summary>
         /// 应用程序标识符
         /// </summary>
-        public  string AppId = "Fan.RestNoitification";
+        public  string AppId = "Fan.RestNotification";
         /// <summary>
         /// 快捷方式附加路径
         /// </summary>
@@ -27,7 +27,7 @@ namespace RestNoitification.Notification
         /// <summary>
         /// 创建并显示Toast通知
         /// </summary>
-        public  void ShowToast(Message message,Action userCanceled=null)
+        public  void ShowToast(Message message,Action activated=null,Action userCanceled=null,Action timeOut=null)
         {
             TryCreateShortcut(AppId);
 
@@ -44,10 +44,10 @@ namespace RestNoitification.Notification
             CreateAudio(message.IsPlayingSound, toastXml);
 
             ToastNotification toast = new ToastNotification(toastXml);
-            toast.ExpirationTime = new DateTimeOffset(DateTime.Now + new TimeSpan(0, 0, 5));
             toast.Activated += (sender, e) =>
             {
                 Console.WriteLine("Activated");
+                activated?.Invoke();
             };
             toast.Dismissed += (sender, e) =>
             {
@@ -60,13 +60,14 @@ namespace RestNoitification.Notification
                         exitCode = 1;
                         break;
                     case ToastDismissalReason.UserCanceled:
-                        outputText = "Dismissed";
+                        outputText = "UserCanceled";
                         exitCode = 2;
                         userCanceled?.Invoke();
                         break;
                     case ToastDismissalReason.TimedOut:
                         outputText = "Timeout";
                         exitCode = 3;
+                        timeOut?.Invoke();
                         break;
                 }
                 Console.WriteLine($"code:{exitCode}description:{outputText}");

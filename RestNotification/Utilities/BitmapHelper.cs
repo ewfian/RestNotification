@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestNoitification.Utilities
+namespace RestNotification.Utilities
 {
     /// <summary>
     /// 位图辅助类
