@@ -22,7 +22,7 @@ namespace RestNotification.Notification
         /// <summary>
         /// 快捷方式附加路径
         /// </summary>
-        public  string InkPath = "\\Microsoft\\Windows\\Start Menu\\Programs\\RestNoitification.lnk";
+        public  string InkPath = "\\Microsoft\\Windows\\Start Menu\\Programs\\RestNotification.lnk";
 
         /// <summary>
         /// 创建并显示Toast通知
