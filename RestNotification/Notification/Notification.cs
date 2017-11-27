@@ -39,15 +39,10 @@ namespace RestNotification.Notification
         /// </summary>
         public Notification()
         {
-
-
             TrayIcon = new TrayIcon();
             TrayIcon.NotifyIcon.ContextMenu = TrayIconHelper.GetExitContextMenu();
 
             Toast = new Toast();
-
-
-
         }
         /// <summary>
         /// 开始
@@ -93,15 +88,20 @@ namespace RestNotification.Notification
             {
                 string content = string.Empty;
                 int total = (int)Math.Round((Target - DateTime.Now).TotalMinutes);
-                if (total > 0)
+                if (total >= 1)
                 {
                     content = $"再工作{total}分钟就该休息了";
                 }
-                else
+                else if (total >= 0)
                 {
                     int totalSeconds = (int)Math.Round((Target - DateTime.Now).TotalSeconds);
                     content = $"再工作{totalSeconds}秒钟就该休息了";
                 }
+                else
+                {
+                    Reset();
+                }
+
                 await Task.Run(() => TrayIcon.UpdateIcon(BitmapHelper.GetTrayBitmap(total), content));
                 await Task.Delay(interval);
             }
